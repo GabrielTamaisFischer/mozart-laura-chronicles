@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mozart & Laura - Nossa Historia</title>
+    <meta name="description" content="Um presente feito de memoria, carinho e amor - de Mozart para Laura." />
+    <meta property="og:title" content="Mozart & Laura - Nossa Historia" />
+    <meta property="og:description" content="Um presente feito de memoria, carinho e amor." />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#190407" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,500&family=Great+Vibes&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --ink: #fff7ef;
+        --muted: rgba(255, 247, 239, 0.72);
+        --ruby: #d9234e;
+        --rose: #ff6f91;
+        --gold: #f6c96f;
+        --teal: #42e8d4;
+        --wine: #190407;
+        --night: #08050a;
+        --glass: rgba(255, 255, 255, 0.08);
+        --line: rgba(255, 255, 255, 0.18);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at 15% 15%, rgba(217, 35, 78, 0.34), transparent 28rem),
+          radial-gradient(circle at 78% 22%, rgba(66, 232, 212, 0.18), transparent 25rem),
+          radial-gradient(circle at 50% 88%, rgba(246, 201, 111, 0.15), transparent 28rem),
+          linear-gradient(135deg, var(--wine), var(--night) 58%, #12020d);
+        color: var(--ink);
+        font-family: Inter, system-ui, sans-serif;
+        overflow-x: hidden;
+      }
+
+      body.locked { overflow: hidden; }
+      canvas { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.7; }
+      a { color: inherit; }
+
+      .intro {
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background:
+          radial-gradient(circle at center, rgba(217, 35, 78, 0.24), transparent 34rem),
+          rgba(8, 5, 10, 0.92);
+        transition: opacity 900ms ease, visibility 900ms ease;
+      }
+      .intro.hidden { opacity: 0; visibility: hidden; }
+      .intro-inner { max-width: 720px; text-align: center; }
+      .script {
+        font-family: "Great Vibes", cursive;
+        color: var(--gold);
+        font-size: clamp(2.6rem, 9vw, 6rem);
+        line-height: 1;
+        text-shadow: 0 0 28px rgba(246, 201, 111, 0.45);
+      }
+      .intro p, .hero p, .letter p { color: var(--muted); }
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 52px;
+        margin-top: 28px;
+        padding: 0 28px;
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--ruby), var(--rose), var(--gold));
+        color: white;
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: 0 20px 60px rgba(217, 35, 78, 0.36);
+        cursor: pointer;
+      }
+
+      main { position: relative; z-index: 2; }
+      .hero {
+        min-height: 100vh;
+        display: grid;
+        align-items: center;
+        padding: 92px 22px 48px;
+        position: relative;
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0;
+        height: 38vh;
+        background: linear-gradient(transparent, rgba(8, 5, 10, 0.94));
+        pointer-events: none;
+      }
+      .hero-inner {
+        width: min(1040px, 100%);
+        margin: 0 auto;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+      }
+      .eyebrow {
+        margin: 0 0 18px;
+        color: var(--gold);
+        font-family: "Great Vibes", cursive;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+      }
+      h1, h2, h3 {
+        margin: 0;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        letter-spacing: 0;
+      }
+      h1 {
+        font-size: clamp(4.2rem, 16vw, 10.5rem);
+        line-height: 0.86;
+        font-weight: 700;
+        text-shadow: 0 0 48px rgba(255, 111, 145, 0.34);
+      }
+      .amp { color: var(--ruby); font-style: italic; }
+      .gradient-text {
+        background: linear-gradient(90deg, #fff7ef, var(--gold), var(--rose));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .hero-copy {
+        width: min(720px, 100%);
+        margin: 28px auto 0;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(1.25rem, 3vw, 2rem);
+        font-style: italic;
+      }
+      .scroll-link { margin-top: 44px; display: inline-block; color: var(--gold); text-decoration: none; }
+
+      section { padding: 88px 22px; }
+      .wrap { width: min(1060px, 100%); margin: 0 auto; }
+      .section-title { text-align: center; margin-bottom: 36px; }
+      .section-title span {
+        display: block;
+        color: var(--gold);
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+      h2 { margin-top: 10px; font-size: clamp(2.2rem, 7vw, 4.5rem); line-height: 1; }
+      .glass {
+        border: 1px solid var(--line);
+        background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.045));
+        box-shadow: 0 24px 90px rgba(0, 0, 0, 0.38);
+        backdrop-filter: blur(18px);
+      }
+      .letter {
+        width: min(820px, 100%);
+        margin: 0 auto;
+        border-radius: 24px;
+        padding: clamp(26px, 6vw, 56px);
+      }
+      .letter p {
+        margin: 0;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(1.2rem, 3vw, 1.65rem);
+        line-height: 1.65;
+      }
+      .letter p + p { margin-top: 22px; }
+      .signature { text-align: right; font-family: "Great Vibes", cursive !important; color: var(--gold) !important; font-size: clamp(2.4rem, 7vw, 4rem) !important; }
+
+      .timer {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .time-box {
+        min-height: 136px;
+        border-radius: 18px;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: 18px 10px;
+      }
+      .num { display: block; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(2.4rem, 8vw, 4.5rem); font-weight: 700; line-height: 1; color: #fff; }
+      .label { display: block; margin-top: 8px; color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.14em; }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .moment {
+        min-height: 260px;
+        border-radius: 22px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        overflow: hidden;
+        position: relative;
+      }
+      .moment::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 25% 18%, rgba(255,255,255,0.28), transparent 9rem),
+          linear-gradient(135deg, rgba(217,35,78,0.44), rgba(66,232,212,0.20), rgba(246,201,111,0.24));
+        transform: scale(1.02);
+      }
+      .moment > * { position: relative; }
+      .moment h3 { font-size: 2rem; }
+      .moment p { color: var(--muted); line-height: 1.6; }
+
+      .timeline { display: grid; gap: 18px; width: min(820px, 100%); margin: 0 auto; }
+      .step { display: grid; grid-template-columns: 92px 1fr; gap: 18px; align-items: start; }
+      .date { color: var(--gold); font-weight: 700; }
+      .step-content { border-left: 1px solid var(--line); padding: 0 0 28px 22px; }
+      .step-content h3 { font-size: 1.65rem; margin-bottom: 6px; }
+      .step-content p { margin: 0; color: var(--muted); line-height: 1.6; }
+
+      .finale {
+        min-height: 78vh;
+        display: grid;
+        place-items: center;
+        text-align: center;
+      }
+      .finale h2 { font-size: clamp(3.4rem, 12vw, 8rem); }
+      footer { padding: 36px 22px 52px; text-align: center; color: var(--muted); }
+      footer .script { font-size: 2.4rem; }
+
+      .reveal { opacity: 0; transform: translateY(28px); transition: opacity 800ms ease, transform 800ms ease; }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+
+      @media (max-width: 760px) {
+        .timer, .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .moment { min-height: 220px; }
+        .step { grid-template-columns: 1fr; gap: 6px; }
+        .step-content { padding-left: 18px; }
+      }
+      @media (max-width: 460px) {
+        section { padding: 70px 18px; }
+        .timer { grid-template-columns: 1fr 1fr; }
+        .time-box { min-height: 112px; }
+        .grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body class="locked">
+    <canvas id="hearts"></canvas>
+
+    <div class="intro" id="intro" aria-live="polite">
+      <div class="intro-inner">
+        <div class="script">Laura</div>
+        <p>Eu fiz esse cantinho para guardar um pedacinho do que eu sinto por voce.</p>
+        <button class="button" id="openSite">Abrir meu presente</button>
+      </div>
+    </div>
+
+    <main>
+      <section class="hero" id="hero">
+        <div class="hero-inner reveal">
+          <p class="eyebrow">Dia dos Namorados</p>
+          <h1><span class="gradient-text">Mozart</span><br /><span class="amp">&</span><br /><span class="gradient-text">Laura</span></h1>
+          <p class="hero-copy">Desde 18 de janeiro de 2026, o meu mundo ganhou outro sentido.</p>
+          <a class="scroll-link" href="#tempo">role para baixo</a>
+        </div>
+      </section>
+
+      <section id="tempo">
+        <div class="wrap reveal">
+          <div class="section-title">
+            <span>nosso tempo</span>
+            <h2>Estamos construindo nossa historia ha...</h2>
+          </div>
+          <div class="timer" aria-label="Tempo juntos desde 18 de janeiro de 2026">
+            <div class="time-box glass"><div><span class="num" id="days">0</span><span class="label">dias</span></div></div>
+            <div class="time-box glass"><div><span class="num" id="hours">0</span><span class="label">horas</span></div></div>
+            <div class="time-box glass"><div><span class="num" id="minutes">0</span><span class="label">minutos</span></div></div>
+            <div class="time-box glass"><div><span class="num" id="seconds">0</span><span class="label">segundos</span></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap reveal">
+          <div class="section-title">
+            <span>para a minha Laura</span>
+            <h2>Voce e meu mundo</h2>
+          </div>
+          <div class="letter glass">
+            <p>Laura, as vezes eu fico pensando em como algumas pessoas chegam na nossa vida e mudam completamente o caminho. Voce chegou assim. Sem precisar forcar nada, sem precisar explicar muito. De repente, tudo ficou mais bonito, mais leve e mais verdadeiro.</p>
+            <p>Com voce, eu nao me sinto perdido. Eu sinto que estou exatamente onde deveria estar. Cada memoria nossa virou parte do meu lugar favorito no mundo.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap reveal">
+          <div class="section-title">
+            <span>pequenos para sempre</span>
+            <h2>Coisas que eu guardo de nos</h2>
+          </div>
+          <div class="grid">
+            <article class="moment glass"><h3>Seu sorriso</h3><p>O jeito mais bonito que o meu dia tem de melhorar.</p></article>
+            <article class="moment glass"><h3>Nossa calma</h3><p>Com voce, ate o silencio parece abraco.</p></article>
+            <article class="moment glass"><h3>Nosso futuro</h3><p>Um monte de planos, mas todos com a mesma certeza: voce.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap reveal">
+          <div class="section-title">
+            <span>linha do tempo</span>
+            <h2>Capitulos da nossa historia</h2>
+          </div>
+          <div class="timeline">
+            <div class="step"><div class="date">18 jan</div><div class="step-content"><h3>O comeco</h3><p>O dia em que tudo passou a ter um brilho diferente.</p></div></div>
+            <div class="step"><div class="date">agora</div><div class="step-content"><h3>A certeza</h3><p>Eu amo quem eu sou quando estou com voce, e amo ainda mais quem somos juntos.</p></div></div>
+            <div class="step"><div class="date">sempre</div><div class="step-content"><h3>O que vem depois</h3><p>Quero continuar descobrindo o mundo ao seu lado, um dia bonito de cada vez.</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap reveal">
+          <div class="section-title">
+            <span>uma carta</span>
+            <h2>Laura, essa parte e so para voce</h2>
+          </div>
+          <div class="letter glass">
+            <p>Eu nao sei se algum dia vou conseguir explicar exatamente o que voce significa para mim. Mas eu sei que, desde que voce chegou, muita coisa em mim mudou. Voce virou calma, virou saudade, virou vontade de estar perto, virou plano, virou lar.</p>
+            <p>Obrigado por ser a minha Laura. Obrigado por ser a maravilha mais bonita do meu mundo.</p>
+            <p class="signature">Com amor, Mozart</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="finale">
+        <div class="wrap reveal">
+          <h2><span class="gradient-text">Eu te amo, Laura.</span></h2>
+          <p class="hero-copy">E essa historia ainda esta so comecando.</p>
+          <a class="button" href="#hero">Voltar ao inicio</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="script">Mozart & Laura</div>
+      <p>feito com amor - 2026</p>
+    </footer>
+
+    <script>
+      const intro = document.getElementById("intro");
+      document.getElementById("openSite").addEventListener("click", () => {
+        intro.classList.add("hidden");
+        document.body.classList.remove("locked");
+        document.querySelectorAll(".reveal").forEach((el, i) => setTimeout(() => el.classList.add("visible"), i * 120));
+      });
+
+      const start = new Date("2026-01-18T00:00:00-03:00");
+      const ids = ["days", "hours", "minutes", "seconds"];
+      function tick() {
+        const diff = Math.max(0, Date.now() - start.getTime());
+        const total = Math.floor(diff / 1000);
+        const days = Math.floor(total / 86400);
+        const hours = Math.floor((total % 86400) / 3600);
+        const minutes = Math.floor((total % 3600) / 60);
+        const seconds = total % 60;
+        [days, hours, minutes, seconds].forEach((v, i) => document.getElementById(ids[i]).textContent = String(v));
+      }
+      tick();
+      setInterval(tick, 1000);
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("visible");
+        });
+      }, { threshold: 0.16 });
+      document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+      const canvas = document.getElementById("hearts");
+      const ctx = canvas.getContext("2d");
+      let w, h, hearts;
+      function resize() {
+        w = canvas.width = innerWidth * devicePixelRatio;
+        h = canvas.height = innerHeight * devicePixelRatio;
+        canvas.style.width = innerWidth + "px";
+        canvas.style.height = innerHeight + "px";
+        hearts = Array.from({ length: Math.min(72, Math.floor(innerWidth / 16)) }, () => ({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          s: (6 + Math.random() * 14) * devicePixelRatio,
+          v: (0.22 + Math.random() * 0.58) * devicePixelRatio,
+          a: 0.18 + Math.random() * 0.34,
+          drift: -0.5 + Math.random(),
+        }));
+      }
+      function drawHeart(x, y, size, alpha) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.scale(size / 18, size / 18);
+        ctx.beginPath();
+        ctx.moveTo(0, 6);
+        ctx.bezierCurveTo(-14, -4, -5, -14, 0, -6);
+        ctx.bezierCurveTo(5, -14, 14, -4, 0, 6);
+        ctx.fillStyle = `rgba(255, 111, 145, ${alpha})`;
+        ctx.shadowColor = "rgba(246, 201, 111, 0.45)";
+        ctx.shadowBlur = 16;
+        ctx.fill();
+        ctx.restore();
+      }
+      function animate() {
+        ctx.clearRect(0, 0, w, h);
+        hearts.forEach((heart) => {
+          heart.y -= heart.v;
+          heart.x += heart.drift;
+          if (heart.y < -30) { heart.y = h + 30; heart.x = Math.random() * w; }
+          drawHeart(heart.x, heart.y, heart.s, heart.a);
+        });
+        requestAnimationFrame(animate);
+      }
+      addEventListener("resize", resize);
+      resize();
+      animate();
+    </script>
+  </body>
+</html>
